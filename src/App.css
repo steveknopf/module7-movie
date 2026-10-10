@@ -1,38 +1,500 @@
-.App {
-  text-align: center;
+p {
+  line-height: 1.5;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+a {
+  text-decoration: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+a:hover {
+  text-decoration: underline;
 }
 
-.App-header {
-  background-color: #282c34;
+ul {
+  display: flex;
+}
+
+li {
+  list-style-type: none;
+}
+
+
+:root,
+:root[data-theme="dark"] {
+  --surface: black;
+  --on-surface: white;
+}
+
+:root[data-theme="light"] {
+  --surface: white;
+  --on-surface: black;
+}
+
+/* A fixed layer behind the page, instead of background-attachment: fixed,
+   which iPhone Safari doesn't support */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image: url('./assets/popcorn.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
+}
+
+#page__content {
+  flex: 1;
+}
+
+/* NAV */
+
+#nav {
+    display: flex;
+    padding-top: 32px;
+    height: 40px;
+    background-color: var(--surface);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  position: relative;
+  padding: 0 24px;
+  box-sizing: border-box;
+}
+
+.nav__header {
+  color: var(--on-surface);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+
+.nav__container {
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 24px;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+}
+
+.nav__row {
+    display: flex;
+    justify-content: space-between;
+    text-decoration: none;
+}
+
+.nav__link:hover {
+  text-decoration: underline;
+}
+
+.nav__link {
+  display: flex;
+  align-items: center;
+  color: var(--on-surface);
+  font-size: 18px;
+}
+.theme-toggle {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: var(--on-surface);
+  font-size: 22px;
+  cursor: pointer;
+}
+
+/* search bar*/
+
+.search {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  min-height: 60vh;
+}
+
+.search__box {
+  background-color: var(--surface);
+  color: var(--on-surface);
+  text-align: center;
+  padding: 24px 100px;
+  margin: 24px 16px;
+  max-width: calc(100% - 32px);
+  box-sizing: border-box;
+  border-radius: 12px;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+  margin: 20px auto;
+  border: 2px solid black;
+  border-radius: 25px;
+  overflow: hidden;
+  font-family: sans-serif;
+}
+
+.search-container input[type="search"] {
+  flex: 1;
+  min-width: 0; /* lets the input shrink on narrow screens */
+  padding: 10px 15px;
+  border: none;
+  outline: none;
+  font-size: 16px;
+}
+
+.search-container button {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.search-container button:hover {
+  background-color: #0056b3;
+}
+
+/* results */
+
+#displayResults {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  max-width: 1000px; /* at most 3 cards per row */
+  margin: 0 auto;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+.movie__card {
+  max-width: 100%;
+  padding: 16px;
+  border: 2px solid black;
+  cursor: pointer;
+  background-color: var(--surface);
+  border-radius: 5%;
+  color: var(--on-surface);
+  box-sizing: border-box;
+}
+
+.movie__card {
+  width: 300px;
+}
+
+.movie__card img {
+  display: block;
+  width: 100%;
+}
+
+.movie__card:hover {
+  text-decoration: none;
+}
+
+/* movie page */
+
+.movie__page {
+  width: 90%;
+  max-width: 1000px;
+  margin: 32px auto;
+  padding: 24px;
+  box-sizing: border-box;
+  background-color: var(--surface);
+  color: var(--on-surface);
+  border-radius: 12px;
+}
+
+.movie__back {
+  display: inline-block;
+  margin-bottom: 16px;
+  color: red;
+  font-family: sans-serif;
+}
+
+.movie__title {
+  margin: 0 0 24px;
+  font-size: 32px;
+  text-align: center;
+}
+
+.movie__details {
+  display: flex;
+  align-items: flex-start;
+  gap: 32px;
+}
+
+.movie__details img {
+  width: 300px;
+  max-width: 100%;
+  flex-shrink: 0;
+  border-radius: 8px;
+}
+
+.movie__info {
+  flex: 1;
+}
+
+.movie__info p {
+  margin: 0 0 12px;
+}
+
+/* spinner*/
+
+#loading__spinner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  color: red;
+}
+
+
+/* filter */
+
+.filter__container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  width: fit-content;
+  margin: 0 auto 20px;
+  padding: 12px 24px;
+  background-color: var(--surface);
+  color: var(--on-surface);
+  border-radius: 12px;
+  font-family: sans-serif;
+}
+
+.sort {
+  position: relative;
+}
+
+.sort__button {
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: white;
+  color: black;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.sort__button i {
+  margin-left: 6px;
+  font-size: 12px;
+}
+
+/* Opens directly above the button */
+.sort__options {
+  display: block; /* overrides the global ul { display: flex } */
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 0;
+  z-index: 10;
+  min-width: 100%;
+  margin: 0;
+  padding: 4px;
+  background-color: white;
+  color: black;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  white-space: nowrap;
+}
+
+.sort__option {
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.sort__option:hover,
+.sort__option:focus {
+  background-color: #eee;
+  outline: none;
+}
+
+.sort__option[aria-selected="true"] {
+  background-color: red;
+  color: white;
+  font-weight: bold;
+}
+
+
+/* poster wall */
+
+.poster-wall {
+  display: grid;
+  gap: 16px;
+  width: 100%;
+  margin: 0 auto 40px;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+.poster-wall__column {
+  height: 750px; /* 3 posters × 250px: the visible "window" */
+  overflow: hidden;
+}
+
+.poster-wall__track img {
+  display: block;
+  width: 100%;
+  height: 234px;
+  margin-bottom: 16px; /* 234 + 16 = 250px per poster */
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .poster-wall__track--up {
+    animation: scroll-up 40s linear infinite;
+  }
+
+  .poster-wall__track--down {
+    animation: scroll-down 40s linear infinite;
+  }
+}
+
+@keyframes scroll-up {
+  from { transform: translateY(0); }
+  to { transform: translateY(-50%); }
+}
+
+@keyframes scroll-down {
+  from { transform: translateY(-50%); }
+  to { transform: translateY(0); }
+}
+
+/* pagination */
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 24px auto;
+  font-family: sans-serif;
+}
+
+.pagination button {
+  min-width: 40px;
+  height: 40px;
+  border: 2px solid black;
+  border-radius: 50%;
+  background-color: white;
+  color: black;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.pagination button:hover:not(:disabled) {
+  background-color: #0056b3;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.pagination .pagination__number--active {
+  background-color: red;
+  color: white;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.pagination button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* footer */
+
+
+footer {
+    padding: 20px 32px;
+    background-color: var(--surface);
+    position: relative;
+    overflow: hidden;
+}
+
+.footer__copyright {
+  justify-content: center;
+  align-items: center;
+  color: var(--on-surface);
+  font-weight: 500;
+}
+
+/* responsive */
+
+@media (max-width: 768px) {
+  .nav__header h1 {
+    font-size: 16px;
   }
-  to {
-    transform: rotate(360deg);
+
+  .search {
+    min-height: 50vh;
+  }
+
+  .search__box {
+    padding: 24px 20px;
+  }
+
+  .movie__page {
+    width: 95%;
+  }
+
+  .movie__details {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .search__box h1 {
+    font-size: 24px;
+  }
+
+  .filter__container {
+    flex-direction: column;
+  }
+
+  .movie__card {
+    width: 100%;
+  }
+
+  .poster-wall {
+    gap: 8px;
+    padding: 0 8px;
+  }
+
+  .poster-wall__column {
+    height: 420px; /* 3 posters × 140px */
+  }
+
+  .poster-wall__track img {
+    height: 132px;
+    margin-bottom: 8px;
   }
 }
